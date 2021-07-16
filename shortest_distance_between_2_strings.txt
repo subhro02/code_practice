@@ -1,0 +1,62 @@
+#include <cmath>
+
+int Solution::solve(string A) {
+        int distance = -1; int flag = 0; int x = -1; int y = -1;
+        for (int i = 0; i < A.size(); i++)
+            {
+                if (A[i] == 'o' || A[i] == 'x')
+                {
+                    //Initialize
+                    if (flag == 0)
+                    {
+                        if (A[i] == 'o')
+                        {
+                            flag = 1; x = i;
+                        }
+                        else
+                        {
+                            flag = 2; y = i;
+                        }
+                    }
+                    else
+                    {
+                        //Encountered second character after first
+                        if (flag == 1 && A[i] == 'x')
+                        {
+                            y = i; flag = 2;
+                        }
+                        //Encountered first character after second
+                        else if (flag == 2 && A[i] == 'o')
+                        {
+                            x = i; flag = 1;
+                        }
+                        //Encountered first character again after first
+                        else if (flag == 1 && A[i] == 'o')
+                        {
+                            x = i;
+                        }
+                        //Encountered second character again after second
+                        else if (flag == 2 && A[i] == 'x')
+                        {
+                            y = i;
+                        }
+                    }
+                    //Check Distance
+                    if (x != -1 && y != -1)
+                    {
+                        if (distance == -1)
+                        {
+                            distance = abs(x - y);
+                        }
+                        else
+                        {
+                            if (distance > abs(x - y))
+                            {
+                                distance = abs(x - y);
+                            }
+                        }
+                    }
+                }
+            }
+            return distance;
+        }
